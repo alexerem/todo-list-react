@@ -1,17 +1,16 @@
 .Todobody {
     display: flex;
-    justify-content: center;
-    width: 500px;
+    align-items: center;
+    flex-direction: column;
+    width: 560px;
     min-height: 400px;
     margin-top: 50px;
-    padding-top: 50px;
-    padding-bottom: 50px;
-    border: 1px solid black;
+    margin-bottom: 150px;
 }
 
 .taskInput {
     display: flex;
-    position: absolute;
+    position: relative;
     flex-direction: column;
     width: 270px;
 }
@@ -19,6 +18,8 @@
 .taskInput label {
     font-size: 30px;
     font-family: 'Yusei Magic', sans-serif;
+    color: #6897ec;
+    cursor: pointer;
 }
 
 .taskInput input {
@@ -26,26 +27,26 @@
     margin-top: 30px;
     border: none;
     outline: none;
-    border-bottom: 1px solid black;
+    border-bottom: 1px solid #6897ec;
     font-size: 20px;
     transition: 0.5s;
 }
 
 .taskInput input:focus {
-    box-shadow: 0 1px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 1px #33466d;
 }
 
 .buttonPlus {
     display: block;
     font-size: 25px;
     position: absolute;
-    color: black;
+    color: #6897ec;
     top: 70px;
     left: 300px;
-    transition: 0.5s;
+    transition: 0.3s;
 }
 
 .buttonPlus:hover {
-    color: blue;
+    color: #4b68a4;
     cursor: pointer;
 }

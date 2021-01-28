@@ -1,0 +1,27 @@
+.TaskList {
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    margin-top: 30px;
+}
+
+.TaskItem {
+    display: block;
+    width: 250px;
+    height: 55px;
+    word-break: break-all;
+    background: linear-gradient(to right, #9ec5f0, #a4c2f7);
+    padding: 10px 10px;
+    margin: 5px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.TaskItem p {
+    margin: 0;
+    padding: 0;
+}
+
+.checked {
+    background: lightgreen;
+}
