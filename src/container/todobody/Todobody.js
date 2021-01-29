@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import classes from './Todobody.module.css';
 import {PlusCircleOutlined} from '@ant-design/icons';
 import TaskList from '../../component/TaskList/TaskList';
+import ButtonDelChange from "../../component/ButtonDelChange/ButtonDelChange";
 
 
 export default class Todobody extends Component {
@@ -35,6 +36,10 @@ export default class Todobody extends Component {
 		})
 	}
 
+	checked(item) {
+		return item.checked === true
+	}
+
 	render() {
 		return (
 			<div className={classes.Todobody}>
@@ -52,14 +57,21 @@ export default class Todobody extends Component {
 					>
 						<PlusCircleOutlined />
 					</div>
-				</div>
 
+					{
+						this.state.taskList.some(this.checked)
+							?
+						<ButtonDelChange />
+							:
+						null
+					}
+
+				</div>
 
 				<TaskList
 					taskList={this.state.taskList}
 					checkedTask={this.checkedTask.bind(this)}
 				/>
-
 
 			</div>
 		)

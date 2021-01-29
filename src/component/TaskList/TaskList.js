@@ -1,6 +1,7 @@
 import React from 'react';
 import classes from './TaskList.module.css';
 import './TaskList.module.css';
+import {CheckCircleOutlined} from '@ant-design/icons';
 
 const TaskList = props => {
 	return (
@@ -18,6 +19,17 @@ const TaskList = props => {
 								onClick={() => props.checkedTask(index)}
 							>
 								<p>{task.value}</p>
+
+								{
+									props.taskList[index].checked
+										?
+									<div className={classes.checkedIcon}>
+										<CheckCircleOutlined />
+									</div>
+										:
+									null
+								}
+
 							</div>
 						)
 					}
