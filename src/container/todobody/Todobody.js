@@ -28,6 +28,16 @@ export default class Todobody extends Component {
 		}
 	}
 
+	onKeyDown(event) {
+		if (this.state.input.length >= 1 && event.key === 'Enter') {
+			let taskList = this.state.taskList
+			this.setState({
+				taskList: taskList.concat({value: this.state.input, checked: false}),
+				input: ''
+			})
+		}
+	}
+
 	checkedTask(index) {
 		let changeChecked = this.state.taskList
 		changeChecked[index].checked = !changeChecked[index].checked
@@ -40,6 +50,13 @@ export default class Todobody extends Component {
 		return item.checked === true
 	}
 
+	buttonDelChange() {
+		let checked = this.state.taskList.filter(item => item.checked === false)
+		this.setState({
+			taskList: checked
+		})
+	}
+
 	render() {
 		return (
 			<div className={classes.Todobody}>
@@ -50,6 +67,8 @@ export default class Todobody extends Component {
 						type="text" id="taskInput"
 						onChange={this.changeInput.bind(this)}
 						value={this.state.input}
+						maxLength={78}
+						onKeyDown={this.onKeyDown.bind(this)}
 					/>
 					<div
 						className={classes.buttonPlus}
@@ -61,7 +80,9 @@ export default class Todobody extends Component {
 					{
 						this.state.taskList.some(this.checked)
 							?
-						<ButtonDelChange />
+						<ButtonDelChange
+							buttonDelChange={this.buttonDelChange.bind(this)}
+						/>
 							:
 						null
 					}
