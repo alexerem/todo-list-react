@@ -4,4 +4,4 @@ A simple "to-do list" in lite style, with the ability to highlight and delete co
 
 Technologies used - javascript, react, antdesign
 
-![screenshot of sample](src/img/screenshots/todo list.png)
+![screenshot of sample](src/img/screenshots/to-do-list.png)
