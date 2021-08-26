@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import classes from './Todobody.module.css';
-import {PlusCircleOutlined} from '@ant-design/icons';
 import TaskList from '../../component/TaskList/TaskList';
-import ButtonDelChange from "../../component/ButtonDelChange/ButtonDelChange";
+import ButtonDelChange from "../../component/UI/ButtonDelChange/ButtonDelChange";
+import ButtonAdd from "../../component/UI/ButtonAdd/ButtonAdd";
 
 
 export default class Todobody extends Component {
@@ -74,7 +74,7 @@ export default class Todobody extends Component {
 						className={classes.buttonPlus}
 						onClick={this.buttonPlusHandler.bind(this)}
 					>
-						<PlusCircleOutlined />
+						<ButtonAdd />
 					</div>
 
 					{
