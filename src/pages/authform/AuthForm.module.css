@@ -39,3 +39,11 @@ input {
     padding: 8px 10px;
     font-size: 16px;
 }
+
+.AuthForm span {
+    padding: 10px;
+    background-color: #f8ddda;
+    color: #5c5858;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
