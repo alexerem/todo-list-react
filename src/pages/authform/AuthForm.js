@@ -1,13 +1,45 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import classes from './AuthForm.module.css'
 import ButtonAuth from "../../component/UI/ButtonAuth/ButtonAuth";
 import { useForm } from 'react-hook-form';
+import { auth } from '../../actions/auth';
 
 export const AuthForm = () => {
 
+	const [formdata, setFormdata] = useState({
+		email: '',
+		password: '',
+		idButton: '',
+		auth: false
+	});
+
+	const [authtoken, setAuthtoken] = useState({
+		token: null
+	});
+
+	useEffect(() => {
+		if (formdata.email !== '' && formdata.password !== '') {
+			auth(formdata.email, formdata.password, formdata.idButton, authtoken, setAuthtoken)
+		}
+	}, [formdata])
+
+
+
 	const { register, handleSubmit, formState: { errors } } = useForm();
-	const [result, setResult] = useState("");
-	const onSubmit = (data) => { setResult(data) };
+
+	const onSubmit = (data, event) => {
+		if(formdata.auth) { return }
+
+		let email = data.email
+		let password = data.password
+		let idButton = event.nativeEvent.submitter.id
+
+		setFormdata({...formdata, email, password, idButton})
+
+		console.log(formdata)
+		console.log(authtoken)
+	};
+
 
 	return (
 		<div className={classes.AuthForm}>
@@ -44,8 +76,8 @@ export const AuthForm = () => {
 				</div>
 
 				<div className={classes.input}>
-					<ButtonAuth value={'Login'} forInput={'login'} type={'submit'}/>
-					<ButtonAuth value={'Register'} forInput={'register'} type={'submit'}/>
+					<ButtonAuth value={'Login'} name={'login'} type={'submit'}/>
+					<ButtonAuth value={'Register'} name={'register'} type={'submit'}/>
 				</div>
 			</form>
 		</div>

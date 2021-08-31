@@ -7,11 +7,13 @@ const TaskList = props => {
 	return (
 		<div className={classes.TaskList}>
 			{
+				// eslint-disable-next-line array-callback-return
 				props.taskList.map((task, index) => {
 
 					let checked = props.taskList[index].checked ? classes.checked : ''
 
 					if (props.taskList.length > 0) {
+
 						return (
 							<div
 								key={index}
