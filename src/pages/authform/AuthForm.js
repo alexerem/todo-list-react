@@ -1,43 +1,39 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import classes from './AuthForm.module.css'
 import ButtonAuth from "../../component/UI/ButtonAuth/ButtonAuth";
 import { useForm } from 'react-hook-form';
-import { auth } from '../../actions/auth';
+import {AuthContext} from "../../context/auth/authContext";
 
 export const AuthForm = () => {
+
+	const auth = useContext(AuthContext)
 
 	const [formdata, setFormdata] = useState({
 		email: '',
 		password: '',
-		idButton: '',
-		auth: false
-	});
-
-	const [authtoken, setAuthtoken] = useState({
-		token: null
+		idButton: ''
 	});
 
 	useEffect(() => {
 		if (formdata.email !== '' && formdata.password !== '') {
-			auth(formdata.email, formdata.password, formdata.idButton, authtoken, setAuthtoken)
+			auth.auth(formdata.email, formdata.password, formdata.idButton)
 		}
-	}, [formdata])
-
+	}, [auth, formdata])
 
 
 	const { register, handleSubmit, formState: { errors } } = useForm();
 
 	const onSubmit = (data, event) => {
-		if(formdata.auth) { return }
+
+		console.log(auth.token)
+
+		if(auth.token) return
 
 		let email = data.email
 		let password = data.password
 		let idButton = event.nativeEvent.submitter.id
 
 		setFormdata({...formdata, email, password, idButton})
-
-		console.log(formdata)
-		console.log(authtoken)
 	};
 
 
