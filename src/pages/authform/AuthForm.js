@@ -24,9 +24,6 @@ export const AuthForm = () => {
 	const { register, handleSubmit, formState: { errors } } = useForm();
 
 	const onSubmit = (data, event) => {
-
-		console.log(auth.token)
-
 		if(auth.token) return
 
 		let email = data.email

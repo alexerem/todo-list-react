@@ -55,20 +55,18 @@ export const AuthState = ({children}) => {
 	}
 
 	const autoLogin = () => {
-		return () => {
-			const token = localStorage.getItem('token')
-			if(!token) {
+		const token = localStorage.getItem('token')
+		if(!token) {
+			logout()
+		} else {
+			const expirationDate = new Date(localStorage.getItem('expirationDate'))
+			if (expirationDate <= new Date()) {
 				logout()
 			} else {
-				const expirationDate = new Date(localStorage.getItem('expirationDate'))
-				if (expirationDate <= new Date()) {
-					logout()
-				} else {
-					addToken(token)
-					autoLogout((expirationDate.getTime() - new Date().getTime()) / 1000 )
-				}
+				addToken(token)
+				autoLogout((expirationDate.getTime() - new Date().getTime()) / 1000 )
 			}
-		}
+		 }
 	}
 
 	const addToken = (token) => dispatch({type: AUTH_LOGIN, payload: token})
