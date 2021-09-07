@@ -1,12 +1,39 @@
 ul {
     display: flex;
     flex-direction: row;
+    margin-top: 50px;
+    margin-bottom: 30px;
+    justify-content: center;
+    padding: 0;
 }
 
 li {
     list-style-type: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #ede9de;
+    color: #5c5858;
+    height: 50px;
+    width: 170px;
+}
+
+li:nth-child(1) {
+    border-radius: 15px 0 0 15px;
+}
+
+li:nth-child(1):active {
+    background: #a0f88f;
+}
+
+li:nth-child(2) {
+    border-radius: 0 15px 15px 0;
 }
 
 a {
     text-decoration: none;
+}
+
+a:visited {
+    color: #5c5858;
 }

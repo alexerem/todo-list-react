@@ -7,10 +7,10 @@ export const NavStart = () => {
 		<nav className={'nav-start'}>
 			<ul>
 				<li>
-					<NavLink to={'/demo'}> Demo </NavLink>
+					<NavLink to={'/demo'}> DEMO </NavLink>
 				</li>
 				<li>
-					<NavLink to={'/authorization'}> Authorization </NavLink>
+					<NavLink to={'/authorization'}> AUTHORIZATION </NavLink>
 				</li>
 			</ul>
 		</nav>
