@@ -3,7 +3,7 @@ import { AuthContext } from "../../context/auth/authContext";
 import Todobody from "../../pages/todobody/Todobody";
 import { AuthForm } from "../../pages/authform/AuthForm";
 import classes from './Layout.module.css';
-import { Switch, Route} from 'react-router-dom';
+import { Switch, Route, Redirect} from 'react-router-dom';
 import { NavStart } from "../../component/UI/NavStart/NavStart";
 
 
@@ -19,8 +19,10 @@ export const Layout = () => {
 			<div className={classes.Layout}>
 				<NavStart />
 				<Switch>
-					<Route path={'/demo'} component={Todobody} />
-					<Route path={'/authorization'} component={AuthForm} />
+					<Route path={'/demo'} exact component={Todobody} />
+					<Route path={'/authorization'} exact component={AuthForm} />
+					<Redirect to={'/authorization'} />
+					<Redirect from={'/'} to={'/authorization'} />
 				</Switch>
 			</div>
 	)

@@ -7,7 +7,10 @@ import {AUTH_LOGIN, AUTH_LOGOUT} from "../types";
 export const AuthState = ({children}) => {
 
 	const [state, dispatch] = useReducer(
-		authReducer, { token: null }
+		authReducer, {
+			token: null,
+			userId: null
+		}
 	);
 
 
@@ -36,7 +39,7 @@ export const AuthState = ({children}) => {
 		localStorage.setItem('userId', data.localId)
 		localStorage.setItem('expirationDate', expirationDate)
 
-		addToken(data.idToken)
+		addToken(data.idToken, data.localId)
 		autoLogout(data.expiresIn)
 	}
 
@@ -56,6 +59,8 @@ export const AuthState = ({children}) => {
 
 	const autoLogin = () => {
 		const token = localStorage.getItem('token')
+		const userId = localStorage.getItem('userId')
+
 		if(!token) {
 			logout()
 		} else {
@@ -63,22 +68,22 @@ export const AuthState = ({children}) => {
 			if (expirationDate <= new Date()) {
 				logout()
 			} else {
-				addToken(token)
+				addToken(token, userId)
 				autoLogout((expirationDate.getTime() - new Date().getTime()) / 1000 )
 			}
 		 }
 	}
 
-	const addToken = (token) => dispatch({type: AUTH_LOGIN, payload: token})
+	const addToken = (token, userId) => dispatch({type: AUTH_LOGIN, token: token, userId: userId})
 
 	const deleteToken = () => dispatch({type: AUTH_LOGOUT})
 
-	const {token} = state
+	const {token, userId} = state
 
 	return (
 		<AuthContext.Provider value={{
 			auth, logout, autoLogout, addToken, deleteToken, autoLogin,
-			token
+			token, userId
 		}}>
 			{children}
 		</AuthContext.Provider>
