@@ -1,4 +1,4 @@
-ul {
+.nav-start {
     display: flex;
     flex-direction: row;
     margin-top: 50px;
@@ -7,7 +7,7 @@ ul {
     padding: 0;
 }
 
-li {
+a {
     list-style-type: none;
     display: flex;
     justify-content: center;
@@ -16,22 +16,19 @@ li {
     color: #5c5858;
     height: 50px;
     width: 170px;
+    text-decoration: none;
 }
 
-li:nth-child(1) {
+a:nth-child(1) {
     border-radius: 15px 0 0 15px;
 }
 
-li:nth-child(1):active {
-    background: #a0f88f;
-}
-
-li:nth-child(2) {
+a:nth-child(2) {
     border-radius: 0 15px 15px 0;
 }
 
-a {
-    text-decoration: none;
+.nav-start .active {
+    background-color: #a0f88f;
 }
 
 a:visited {

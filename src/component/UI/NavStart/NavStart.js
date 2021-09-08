@@ -5,14 +5,8 @@ import './NavStart.css';
 export const NavStart = () => {
 	return (
 		<nav className={'nav-start'}>
-			<ul>
-				<li>
-					<NavLink to={'/demo'}> DEMO </NavLink>
-				</li>
-				<li>
-					<NavLink to={'/authorization'}> AUTHORIZATION </NavLink>
-				</li>
-			</ul>
+			<NavLink to={'/demo'} className={'btn-demo'}> DEMO </NavLink>
+			<NavLink to={'/authorization'} className={'btn-authorization'}> AUTHORIZATION </NavLink>
 		</nav>
 	)
 }
