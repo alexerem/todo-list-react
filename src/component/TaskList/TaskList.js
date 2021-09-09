@@ -37,6 +37,7 @@ const TaskList = props => {
 					}
 				})
 			}
+
 		</div>
 	)
 }

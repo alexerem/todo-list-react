@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import classes from './Todobody.module.css';
 import TaskList from '../../component/TaskList/TaskList';
-import ButtonDelChange from "../../component/UI/ButtonDelChange/ButtonDelChange";
 import ButtonAdd from "../../component/UI/ButtonAdd/ButtonAdd";
 
 
@@ -50,13 +49,6 @@ export default class Todobody extends Component {
 		return item.checked === true
 	}
 
-	buttonDelChange() {
-		let checked = this.state.taskList.filter(item => item.checked === false)
-		this.setState({
-			taskList: checked
-		})
-	}
-
 	render() {
 		return (
 			<div className={classes.Todobody}>
@@ -76,16 +68,6 @@ export default class Todobody extends Component {
 					>
 						<ButtonAdd />
 					</div>
-
-					{
-						this.state.taskList.some(this.checked)
-							?
-						<ButtonDelChange
-							buttonDelChange={this.buttonDelChange.bind(this)}
-						/>
-							:
-						null
-					}
 
 				</div>
 
