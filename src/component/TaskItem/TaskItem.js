@@ -16,13 +16,12 @@ const TaskItem = props => {
 
 		return (
 			<div
-				key={props.index}
 				className={classes.TaskItem + ' ' + props.checked}
 				onClick={() => props.checkedTask(props.index)}
 				onMouseEnter={showDelButton}
 				onMouseLeave={hideDelButton}
 			>
-				<p>{props.task.value[props.index]}</p>
+				<p>{props.task.value}</p>
 
 				{
 					delButton.delButton
@@ -35,11 +34,11 @@ const TaskItem = props => {
 				{
 					props.taskList[props.index].checked
 						?
-						<div className={classes.checkedIcon} >
-							<CheckCircleTwoTone twoToneColor="#52c41a" />
-						</div>
+					<div className={classes.checkedIcon} >
+						<CheckCircleTwoTone twoToneColor="#52c41a" />
+					</div>
 						:
-						null
+					null
 				}
 
 			</div>

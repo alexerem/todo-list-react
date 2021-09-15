@@ -15,13 +15,15 @@ const TaskList = props => {
 					if (props.taskList.length > 0) {
 
 						return (
+							<div key={index}>
 								<TaskItem
-									key={index}
 									index={index}
 									checked={checked}
 									checkedTask={() => props.checkedTask(index)}
 									task={task}
+									taskList={props.taskList}
 								/>
+							</div>
 						)
 
 					}

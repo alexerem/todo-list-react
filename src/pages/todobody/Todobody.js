@@ -18,7 +18,7 @@ export default class Todobody extends Component {
 	}
 
 	buttonPlusHandler() {
-		if (this.state.input.length >= 1) {
+		if (this.state.input.length >= 1 && this.state.input[0] !== ' ') {
 			let taskList = this.state.taskList
 			this.setState({
 				taskList: taskList.concat({value: this.state.input, checked: false}),
