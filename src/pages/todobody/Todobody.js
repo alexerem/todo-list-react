@@ -37,6 +37,16 @@ export default class Todobody extends Component {
 		}
 	}
 
+	deleteTask(event, index) {
+		event.stopPropagation()
+		let taskList = this.state.taskList
+		taskList.splice(index, 1)
+		this.setState({
+			taskList: taskList
+		})
+	}
+
+
 	checkedTask(index) {
 		let changeChecked = this.state.taskList
 		changeChecked[index].checked = !changeChecked[index].checked
@@ -74,6 +84,7 @@ export default class Todobody extends Component {
 				<TaskList
 					taskList={this.state.taskList}
 					checkedTask={this.checkedTask.bind(this)}
+					deleteTask={this.deleteTask.bind(this)}
 				/>
 
 			</div>

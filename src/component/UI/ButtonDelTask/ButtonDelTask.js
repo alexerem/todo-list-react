@@ -15,7 +15,7 @@ export const ButtonDelTask = () => {
 	}
 
 	return (
-		<div className={'deleteIcon'} onMouseOver={colorOver} onMouseOut={colorDown} >
+		<div className={'deleteIcon'} onMouseEnter={colorOver} onMouseLeave={colorDown} >
 			<DeleteTwoTone twoToneColor={color.color} />
 		</div>
 	)

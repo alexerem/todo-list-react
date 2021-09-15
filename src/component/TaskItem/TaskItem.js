@@ -26,8 +26,12 @@ const TaskItem = props => {
 				{
 					delButton.delButton
 						?
-					< ButtonDelTask />
-						:
+					<div
+						onClick={(event) => props.deleteTask(event, props.index)}
+					>
+						< ButtonDelTask />
+					</div>
+					:
 					null
 				}
 

@@ -20,6 +20,7 @@ const TaskList = props => {
 									index={index}
 									checked={checked}
 									checkedTask={() => props.checkedTask(index)}
+									deleteTask={(event) => props.deleteTask(event, index)}
 									task={task}
 									taskList={props.taskList}
 								/>
