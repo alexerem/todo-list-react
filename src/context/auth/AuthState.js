@@ -9,7 +9,8 @@ export const AuthState = ({children}) => {
 	const [state, dispatch] = useReducer(
 		authReducer, {
 			token: null,
-			userId: null
+			userId: null,
+			email: null
 		}
 	);
 
@@ -38,8 +39,9 @@ export const AuthState = ({children}) => {
 		localStorage.setItem('token', data.idToken)
 		localStorage.setItem('userId', data.localId)
 		localStorage.setItem('expirationDate', expirationDate)
+		localStorage.setItem('email', data.email)
 
-		addToken(data.idToken, data.localId)
+		addToken(data.idToken, data.localId, data.email)
 		autoLogout(data.expiresIn)
 	}
 
@@ -47,6 +49,7 @@ export const AuthState = ({children}) => {
 		localStorage.removeItem('token')
 		localStorage.removeItem('userId')
 		localStorage.removeItem('expirationDate')
+		localStorage.removeItem('email')
 
 		deleteToken()
 	}
@@ -60,6 +63,7 @@ export const AuthState = ({children}) => {
 	const autoLogin = () => {
 		const token = localStorage.getItem('token')
 		const userId = localStorage.getItem('userId')
+		const email = localStorage.getItem('email')
 
 		if(!token) {
 			logout()
@@ -68,22 +72,22 @@ export const AuthState = ({children}) => {
 			if (expirationDate <= new Date()) {
 				logout()
 			} else {
-				addToken(token, userId)
+				addToken(token, userId, email)
 				autoLogout((expirationDate.getTime() - new Date().getTime()) / 1000 )
 			}
 		 }
 	}
 
-	const addToken = (token, userId) => dispatch({type: AUTH_LOGIN, token: token, userId: userId})
+	const addToken = (token, userId, email) => dispatch({type: AUTH_LOGIN, token: token, userId: userId, email: email})
 
 	const deleteToken = () => dispatch({type: AUTH_LOGOUT})
 
-	const {token, userId} = state
+	const {token, userId, email} = state
 
 	return (
 		<AuthContext.Provider value={{
 			auth, logout, autoLogout, addToken, deleteToken, autoLogin,
-			token, userId
+			token, userId, email
 		}}>
 			{children}
 		</AuthContext.Provider>
