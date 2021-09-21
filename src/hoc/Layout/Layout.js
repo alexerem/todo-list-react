@@ -5,6 +5,7 @@ import { AuthForm } from "../../pages/authform/AuthForm";
 import classes from './Layout.module.css';
 import { Switch, Route, Redirect} from 'react-router-dom';
 import { NavStart } from "../../component/UI/NavStart/NavStart";
+import { Info } from "../../component/UI/Info/Info";
 
 
 export const Layout = () => {
@@ -13,17 +14,40 @@ export const Layout = () => {
 
 	useEffect(() => {
 		auth.autoLogin()
+		console.log(auth)
 	}, [])
 
-	return (
+	if (auth.token === null) {
+		return (
 			<div className={classes.Layout}>
-				<NavStart />
+				<NavStart
+					authorization={false}
+				/>
 				<Switch>
-					<Route path={'/demo'} exact component={Todobody} />
-					<Route path={'/authorization'} exact component={AuthForm} />
-					<Redirect to={'/authorization'} />
-					<Redirect from={'/'} to={'/authorization'} />
+					<Route path={'/demo'} exact component={Todobody}/>
+					<Route path={'/authorization'} exact component={AuthForm}/>
+					<Redirect to={'/authorization'}/>
+					<Redirect from={'/'} to={'/authorization'}/>
 				</Switch>
 			</div>
-	)
+		)
+	}
+
+	if (auth.token)	{
+		return (
+			<div className={classes.Layout}>
+				<NavStart
+					authorization={true}
+					email={auth.email}
+				/>
+				<Switch>
+					<Route path={'/demo'} exact component={Todobody}/>
+					<Route path={'/info'} exact component={Info}/>
+					<Redirect to={'/demo'}/>
+					<Redirect from={'/'} to={'/demo'}/>
+				</Switch>
+			</div>
+		)
+	}
+
 }
