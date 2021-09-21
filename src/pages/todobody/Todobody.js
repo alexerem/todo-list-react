@@ -1,65 +1,62 @@
-import React, {Component} from 'react';
+import React, {useState} from 'react';
 import classes from './Todobody.module.css';
 import TaskList from '../../component/TaskList/TaskList';
 import ButtonAdd from "../../component/UI/ButtonAdd/ButtonAdd";
 
+const Todobody = () => {
 
-export default class Todobody extends Component {
-
-	state = {
+	const [todoState, setTodoState] = useState({
 		taskList: [],
 		input: ''
-	}
+	})
 
-	changeInput(event) {
-		this.setState({
+	const changeInput = (event) => {
+		setTodoState({
+			...todoState,
 			input: event.target.value
 		})
 	}
 
-	buttonPlusHandler() {
-		if (this.state.input.length >= 1 && this.state.input[0] !== ' ') {
-			let taskList = this.state.taskList
-			this.setState({
-				taskList: taskList.concat({value: this.state.input, checked: false}),
+	const buttonPlusHandler = () => {
+		if (todoState.input.length >= 1 && todoState.input[0] !== ' ') {
+			let taskList = todoState.taskList
+			setTodoState({
+				taskList: taskList.concat({value: todoState.input, checked: false}),
 				input: ''
 			})
 		}
 	}
 
-	onKeyDown(event) {
-		if (this.state.input.length >= 1 && event.key === 'Enter') {
-			let taskList = this.state.taskList
-			this.setState({
-				taskList: taskList.concat({value: this.state.input, checked: false}),
+	const onKeyDown = (event) => {
+		if (todoState.input.length >= 1 && event.key === 'Enter') {
+			let taskList = todoState.taskList
+			setTodoState({
+				taskList: taskList.concat({value: todoState.input, checked: false}),
 				input: ''
 			})
 		}
 	}
 
-	deleteTask(event, index) {
+	const deleteTask = (event, index) => {
 		event.stopPropagation()
-		let taskList = this.state.taskList
+		let taskList = todoState.taskList
 		taskList.splice(index, 1)
-		this.setState({
+		setTodoState({
+			...todoState,
 			taskList: taskList
 		})
 	}
 
 
-	checkedTask(index) {
-		let changeChecked = this.state.taskList
+	const checkedTask = (index) => {
+		let changeChecked = todoState.taskList
 		changeChecked[index].checked = !changeChecked[index].checked
-		this.setState( {
+		setTodoState( {
+			...todoState,
 			taskList: changeChecked
 		})
 	}
 
-	checked(item) {
-		return item.checked === true
-	}
-
-	render() {
 		return (
 			<div className={classes.Todobody}>
 
@@ -67,14 +64,14 @@ export default class Todobody extends Component {
 					<label htmlFor="taskInput">Enter you task</label>
 					<input
 						type="text" id="taskInput"
-						onChange={this.changeInput.bind(this)}
-						value={this.state.input}
+						onChange={event => changeInput(event)}
+						value={todoState.input}
 						maxLength={78}
-						onKeyDown={this.onKeyDown.bind(this)}
+						onKeyDown={event => onKeyDown(event)}
 					/>
 					<div
 						className={classes.buttonPlus}
-						onClick={this.buttonPlusHandler.bind(this)}
+						onClick={(event) => buttonPlusHandler(event)}
 					>
 						<ButtonAdd />
 					</div>
@@ -82,12 +79,14 @@ export default class Todobody extends Component {
 				</div>
 
 				<TaskList
-					taskList={this.state.taskList}
-					checkedTask={this.checkedTask.bind(this)}
-					deleteTask={this.deleteTask.bind(this)}
+					taskList={todoState.taskList}
+					checkedTask={checkedTask.bind(this)}
+					deleteTask={deleteTask.bind(this)}
 				/>
 
 			</div>
 		)
-	}
+
 }
+
+export default Todobody;
