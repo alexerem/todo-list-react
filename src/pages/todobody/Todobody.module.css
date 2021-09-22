@@ -19,6 +19,7 @@
     font-family: 'Yusei Magic', sans-serif;
     color: #6897ec;
     cursor: pointer;
+    text-align: center;
 }
 
 .taskInput input {

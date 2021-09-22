@@ -14,7 +14,6 @@ export const Layout = () => {
 
 	useEffect(() => {
 		auth.autoLogin()
-		console.log(auth)
 	}, [])
 
 	if (auth.token === null) {
@@ -38,13 +37,12 @@ export const Layout = () => {
 			<div className={classes.Layout}>
 				<NavStart
 					authorization={true}
-					email={auth.email}
 				/>
 				<Switch>
-					<Route path={'/demo'} exact component={Todobody}/>
+					<Route path={'/to-do'} exact component={Todobody}/>
 					<Route path={'/info'} exact component={Info}/>
-					<Redirect to={'/demo'}/>
-					<Redirect from={'/'} to={'/demo'}/>
+					<Redirect to={'/to-do'}/>
+					<Redirect from={'/'} to={'/to-do'}/>
 				</Switch>
 			</div>
 		)
