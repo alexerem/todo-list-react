@@ -1,9 +1,13 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import classes from './Todobody.module.css';
 import TaskList from '../../component/TaskList/TaskList';
 import ButtonAdd from "../../component/UI/ButtonAdd/ButtonAdd";
+import {AuthContext} from "../../context/auth/authContext";
+import axios from "../../axios/axios-database";
 
 const Todobody = () => {
+
+	const auth = useContext(AuthContext)
 
 	const [todoState, setTodoState] = useState({
 		taskList: [],
@@ -17,23 +21,45 @@ const Todobody = () => {
 		})
 	}
 
-	const buttonPlusHandler = () => {
+	const buttonPlusHandler = async () => {
 		if (todoState.input.length >= 1 && todoState.input[0] !== ' ') {
-			let taskList = todoState.taskList
-			setTodoState({
-				taskList: taskList.concat({value: todoState.input, checked: false}),
-				input: ''
-			})
+			if(auth.token) {
+				let taskList = todoState.taskList.concat({value: todoState.input, checked: false})
+				try {
+					const response = await axios.post(`/users/${auth.userId}.json`, taskList)
+					setTodoState({...todoState, input: ''})
+					console.log(response.data)
+				} catch (error) {
+					console.log(error)
+				}
+			} else {
+				let taskList = todoState.taskList
+				setTodoState({
+					taskList: taskList.concat({value: todoState.input, checked: false}),
+					input: ''
+				})
+			}
 		}
 	}
 
-	const onKeyDown = (event) => {
-		if (todoState.input.length >= 1 && event.key === 'Enter') {
-			let taskList = todoState.taskList
-			setTodoState({
-				taskList: taskList.concat({value: todoState.input, checked: false}),
-				input: ''
-			})
+	const onKeyDown = async (event) => {
+		if (todoState.input.length >= 1 && event.key === 'Enter' && todoState.input[0] !== ' ') {
+			if(auth.token) {
+				let taskList = todoState.taskList.concat({value: todoState.input, checked: false})
+				try {
+					const response = await axios.post(`/users/${auth.userId}.json`, taskList)
+					setTodoState({...todoState, input: ''})
+					console.log(response.data)
+				} catch (error) {
+					console.log(error)
+				}
+			} else {
+				let taskList = todoState.taskList
+				setTodoState({
+					taskList: taskList.concat({value: todoState.input, checked: false}),
+					input: ''
+				})
+			}
 		}
 	}
 
