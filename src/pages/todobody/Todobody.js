@@ -1,4 +1,4 @@
-import React, {useState, useContext} from 'react';
+import React, {useState, useContext, useEffect} from 'react';
 import classes from './Todobody.module.css';
 import TaskList from '../../component/TaskList/TaskList';
 import ButtonAdd from "../../component/UI/ButtonAdd/ButtonAdd";
@@ -11,8 +11,24 @@ const Todobody = () => {
 
 	const [todoState, setTodoState] = useState({
 		taskList: [],
-		input: ''
+		input: '',
+		changeState: false
 	})
+
+	useEffect( () => {
+		(async function() {
+			if(auth.token) {
+				try {
+					const response = await axios.get(`/users/${auth.userId}.json`)
+					const taskList = []
+					Object.values(response.data).forEach((task) => { taskList.push(task[0]) })
+					setTodoState({...todoState, taskList: taskList})
+				} catch (error) {
+					console.log(error)
+				}
+			}
+		})();
+	},[auth.token, auth.userId, todoState.changeState])
 
 	const changeInput = (event) => {
 		setTodoState({
@@ -26,9 +42,8 @@ const Todobody = () => {
 			if(auth.token) {
 				let taskList = todoState.taskList.concat({value: todoState.input, checked: false})
 				try {
-					const response = await axios.post(`/users/${auth.userId}.json`, taskList)
-					setTodoState({...todoState, input: ''})
-					console.log(response.data)
+					await axios.post(`/users/${auth.userId}.json`, taskList)
+					setTodoState({...todoState, input: '', changeState: !todoState.changeState})
 				} catch (error) {
 					console.log(error)
 				}
@@ -47,9 +62,8 @@ const Todobody = () => {
 			if(auth.token) {
 				let taskList = todoState.taskList.concat({value: todoState.input, checked: false})
 				try {
-					const response = await axios.post(`/users/${auth.userId}.json`, taskList)
-					setTodoState({...todoState, input: ''})
-					console.log(response.data)
+					await axios.post(`/users/${auth.userId}.json`, taskList)
+					setTodoState({...todoState, input: '', changeState: !todoState.changeState})
 				} catch (error) {
 					console.log(error)
 				}
