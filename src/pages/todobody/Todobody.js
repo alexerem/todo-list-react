@@ -107,11 +107,25 @@ const Todobody = () => {
 	}
 
 
-	const checkedTask = (index) => {
-		let changeChecked = todoState.taskList
-		changeChecked[index].checked = !changeChecked[index].checked
+	const checkedTask = async (index) => {
+		if(auth.token) {
+			try {
+				let nameKeysTodoDB = sessionStorage.getItem('nameKeysTodoDB')
+				let keysTodoDB = JSON.parse(nameKeysTodoDB)
 
-		setTodoState( {...todoState, taskList: changeChecked})
+				let changeChecked = todoState.taskList[index].checked
+				await axios.patch(`/users/${auth.userId}/${keysTodoDB[index]}.json`, {checked: !changeChecked})
+
+				setTodoState({...todoState, changeState: !todoState.changeState})
+			} catch (error) {
+				console.log(error)
+			}
+		} else {
+			let changeChecked = todoState.taskList
+			changeChecked[index].checked = !changeChecked[index].checked
+
+			setTodoState( {...todoState, taskList: changeChecked})
+		}
 	}
 
 		return (
