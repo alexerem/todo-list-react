@@ -19,10 +19,17 @@ const Todobody = () => {
 		(async function() {
 			if(auth.token) {
 				try {
+
 					const response = await axios.get(`/users/${auth.userId}.json`)
+
 					const taskList = []
-					Object.values(response.data).forEach((task) => { taskList.push(task[0]) })
+					Object.values(response.data).forEach((task) => { taskList.push(task) })
+
+					const keys = Object.keys(response.data)
+					sessionStorage.setItem('nameKeysTodoDB', JSON.stringify(keys))
+
 					setTodoState({...todoState, taskList: taskList})
+
 				} catch (error) {
 					console.log(error)
 				}
@@ -40,9 +47,10 @@ const Todobody = () => {
 	const buttonPlusHandler = async () => {
 		if (todoState.input.length >= 1 && todoState.input[0] !== ' ') {
 			if(auth.token) {
-				let taskList = todoState.taskList.concat({value: todoState.input, checked: false})
+				let taskList = {value: todoState.input, checked: false}
 				try {
 					await axios.post(`/users/${auth.userId}.json`, taskList)
+
 					setTodoState({...todoState, input: '', changeState: !todoState.changeState})
 				} catch (error) {
 					console.log(error)
@@ -60,9 +68,12 @@ const Todobody = () => {
 	const onKeyDown = async (event) => {
 		if (todoState.input.length >= 1 && event.key === 'Enter' && todoState.input[0] !== ' ') {
 			if(auth.token) {
-				let taskList = todoState.taskList.concat({value: todoState.input, checked: false})
+
+				let taskList = {value: todoState.input, checked: false}
+
 				try {
 					await axios.post(`/users/${auth.userId}.json`, taskList)
+
 					setTodoState({...todoState, input: '', changeState: !todoState.changeState})
 				} catch (error) {
 					console.log(error)
@@ -77,24 +88,30 @@ const Todobody = () => {
 		}
 	}
 
-	const deleteTask = (event, index) => {
+	const deleteTask = async (event, index) => {
 		event.stopPropagation()
-		let taskList = todoState.taskList
-		taskList.splice(index, 1)
-		setTodoState({
-			...todoState,
-			taskList: taskList
-		})
+		if(auth.token) {
+			let nameKeysTodoDB = sessionStorage.getItem('nameKeysTodoDB')
+			let keysTodoDB = JSON.parse(nameKeysTodoDB)
+
+			await axios.delete(`/users/${auth.userId}/${keysTodoDB[index]}.json`)
+
+			setTodoState({...todoState, changeState: !todoState.changeState})
+
+		} else {
+			let taskList = todoState.taskList
+			taskList.splice(index, 1)
+
+			setTodoState({...todoState, taskList: taskList})
+		}
 	}
 
 
 	const checkedTask = (index) => {
 		let changeChecked = todoState.taskList
 		changeChecked[index].checked = !changeChecked[index].checked
-		setTodoState( {
-			...todoState,
-			taskList: changeChecked
-		})
+
+		setTodoState( {...todoState, taskList: changeChecked})
 	}
 
 		return (
