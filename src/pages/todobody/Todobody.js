@@ -20,7 +20,7 @@ const Todobody = () => {
 			if(auth.token) {
 				try {
 
-					const response = await axios.get(`/users/${auth.userId}.json`)
+					const response = await axios.get(`/users/${auth.userId}.json?auth=${auth.token}`)
 
 					const taskList = []
 					Object.values(response.data).forEach((task) => { taskList.push(task) })
@@ -49,7 +49,7 @@ const Todobody = () => {
 			if(auth.token) {
 				let taskList = {value: todoState.input, checked: false}
 				try {
-					await axios.post(`/users/${auth.userId}.json`, taskList)
+					await axios.post(`/users/${auth.userId}.json?auth=${auth.token}`, taskList)
 
 					setTodoState({...todoState, input: '', changeState: !todoState.changeState})
 				} catch (error) {
@@ -72,7 +72,7 @@ const Todobody = () => {
 				let taskList = {value: todoState.input, checked: false}
 
 				try {
-					await axios.post(`/users/${auth.userId}.json`, taskList)
+					await axios.post(`/users/${auth.userId}.json?auth=${auth.token}`, taskList)
 
 					setTodoState({...todoState, input: '', changeState: !todoState.changeState})
 				} catch (error) {
@@ -94,9 +94,13 @@ const Todobody = () => {
 			let nameKeysTodoDB = sessionStorage.getItem('nameKeysTodoDB')
 			let keysTodoDB = JSON.parse(nameKeysTodoDB)
 
-			await axios.delete(`/users/${auth.userId}/${keysTodoDB[index]}.json`)
+			try {
+				await axios.delete(`/users/${auth.userId}/${keysTodoDB[index]}.json?auth=${auth.token}`)
 
-			setTodoState({...todoState, changeState: !todoState.changeState})
+				setTodoState({...todoState, changeState: !todoState.changeState})
+			} catch (error) {
+				console.log(error)
+			}
 
 		} else {
 			let taskList = todoState.taskList
@@ -114,7 +118,7 @@ const Todobody = () => {
 				let keysTodoDB = JSON.parse(nameKeysTodoDB)
 
 				let changeChecked = todoState.taskList[index].checked
-				await axios.patch(`/users/${auth.userId}/${keysTodoDB[index]}.json`, {checked: !changeChecked})
+				await axios.patch(`/users/${auth.userId}/${keysTodoDB[index]}.json?auth=${auth.token}`, {checked: !changeChecked})
 
 				setTodoState({...todoState, changeState: !todoState.changeState})
 			} catch (error) {
