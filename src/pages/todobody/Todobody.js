@@ -4,16 +4,30 @@ import TaskList from '../../component/TaskList/TaskList';
 import ButtonAdd from "../../component/UI/ButtonAdd/ButtonAdd";
 import {AuthContext} from "../../context/auth/authContext";
 import axios from "../../axios/axios-database";
+import Loader from "../../component/UI/Loader/Loader";
 
 const Todobody = () => {
 
 	const auth = useContext(AuthContext)
 
-	const [todoState, setTodoState] = useState({
-		taskList: [],
-		input: '',
-		changeState: false
-	})
+	let state = null;
+	if (auth.token) {
+		state = {
+			taskList: [],
+			input: '',
+			changeState: false,
+			loader: true
+		}
+	} else {
+		state = {
+			taskList: [],
+			input: '',
+			changeState: false,
+			loader: false
+		}
+	}
+
+	const [todoState, setTodoState] = useState(state)
 
 	useEffect( () => {
 		(async function() {
@@ -28,11 +42,14 @@ const Todobody = () => {
 					const keys = Object.keys(response.data)
 					sessionStorage.setItem('nameKeysTodoDB', JSON.stringify(keys))
 
-					setTodoState({...todoState, taskList: taskList})
+					setTodoState({...todoState, taskList: taskList, loader: false})
 
 				} catch (error) {
 					console.log(error)
 				}
+			}
+			if(!auth.token) {
+				setTodoState({...todoState, loader: false})
 			}
 		})();
 	},[auth.token, auth.userId, todoState.changeState])
@@ -152,6 +169,12 @@ const Todobody = () => {
 					</div>
 
 				</div>
+
+				{
+					todoState.loader
+						? <Loader />
+						: null
+				}
 
 				<TaskList
 					taskList={todoState.taskList}
