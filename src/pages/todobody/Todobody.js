@@ -37,10 +37,17 @@ const Todobody = () => {
 					const response = await axios.get(`/users/${auth.userId}.json?auth=${auth.token}`)
 
 					const taskList = []
-					Object.values(response.data).forEach((task) => { taskList.push(task) })
 
-					const keys = Object.keys(response.data)
-					sessionStorage.setItem('nameKeysTodoDB', JSON.stringify(keys))
+					if(response.data !== null && response.data !== undefined) {
+
+						Object.values(response.data).forEach((task) => { taskList.push(task) })
+
+						const keys = Object.keys(response.data)
+						sessionStorage.setItem('nameKeysTodoDB', JSON.stringify(keys))
+
+					} else {
+						setTodoState({...todoState, taskList: taskList, loader: false})
+					}
 
 					setTodoState({...todoState, taskList: taskList, loader: false})
 
