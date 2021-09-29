@@ -1,0 +1,33 @@
+.ErrorMessage {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 300px;
+    background-color: #f8ddda;
+    animation-duration: 3s;
+    animation-name: changeBg;
+    animation-delay: 300ms;
+}
+
+@keyframes changeBg {
+    from {
+        background-color: #f8ddda;
+    }
+
+    25% {
+        background-color: #cf594b;
+    }
+
+    75% {
+        background-color: #cf594b;
+    }
+
+    to {
+        background-color: #f8ddda;
+    }
+}
+
+.ErrorMessage p {
+    color: black;
+}
+

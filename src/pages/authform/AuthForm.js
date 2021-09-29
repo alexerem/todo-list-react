@@ -3,6 +3,7 @@ import classes from './AuthForm.module.css'
 import ButtonAuth from "../../component/UI/ButtonAuth/ButtonAuth";
 import { useForm } from 'react-hook-form';
 import {AuthContext} from "../../context/auth/authContext";
+import ErrorMessage from "../../component/UI/ErrorMessage/ErrorMessage";
 
 export const AuthForm = () => {
 
@@ -17,6 +18,8 @@ export const AuthForm = () => {
 	useEffect(() => {
 		if (formdata.email !== '' && formdata.password !== '') {
 			auth.auth(formdata.email, formdata.password, formdata.idButton)
+			setFormdata({...formdata, email: '', password: '', idButton: ''})
+			auth.changeErrorAuth(null)
 		}
 	}, [auth, formdata])
 
@@ -72,6 +75,9 @@ export const AuthForm = () => {
 					<ButtonAuth value={'Login'} name={'login'} type={'submit'}/>
 					<ButtonAuth value={'Register'} name={'register'} type={'submit'}/>
 				</div>
+
+				<ErrorMessage errorText={auth.errorAuth}/>
+
 			</form>
 		</div>
 	)
