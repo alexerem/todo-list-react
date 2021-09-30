@@ -23,6 +23,12 @@ export const AuthForm = () => {
 		}
 	}, [auth, formdata])
 
+	useEffect(() => {
+		if (formdata.email === '' && formdata.password === '') {
+			auth.changeErrorAuth(null)
+		}
+	}, [])
+
 
 	const { register, handleSubmit, formState: { errors } } = useForm();
 

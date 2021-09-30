@@ -51,15 +51,18 @@ export const AuthState = ({children}) => {
 
 			if (error.response.data.error.message === 'INVALID_PASSWORD') {
 				changeErrorAuth('INVALID_PASSWORD')
-				console.log('INVALID_PASSWORD')
 			}
 			if (error.response.data.error.message.includes('TOO_MANY_ATTEMPTS_TRY_LATER')) {
 				changeErrorAuth('TOO_MANY_ATTEMPTS_TRY_LATER')
-				console.log('TOO_MANY_ATTEMPTS_TRY_LATER')
 			}
 			if (error.response.data.error.message === 'EMAIL_NOT_FOUND') {
-				console.log('EMAIL_NOT_FOUND')
 				changeErrorAuth('EMAIL_NOT_FOUND')
+			}
+			if (error.response.data.error.message === 'EMAIL_EXISTS') {
+				changeErrorAuth('EMAIL_EXISTS')
+			}
+			if (error.response.data.error.message === 'USER_DISABLED') {
+				changeErrorAuth('USER_DISABLED')
 			}
 
 			console.log(error)

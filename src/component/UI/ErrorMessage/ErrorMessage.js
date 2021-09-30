@@ -10,7 +10,7 @@ const ErrorMessage = (props) => {
 	if(props.errorText === 'INVALID_PASSWORD') {
 		return (
 			<div className={classes.ErrorMessage}>
-				<p>INVALID PASSWORD</p>
+				<p>Invalid password</p>
 			</div>
 		)
 	}
@@ -18,7 +18,7 @@ const ErrorMessage = (props) => {
 	if(props.errorText.includes('TOO_MANY_ATTEMPTS_TRY_LATER')) {
 		return (
 			<div className={classes.ErrorMessage}>
-				<p></p>
+				<p>Too many attempts try later</p>
 			</div>
 		)
 	}
@@ -26,7 +26,23 @@ const ErrorMessage = (props) => {
 	if(props.errorText === 'EMAIL_NOT_FOUND') {
 		return (
 			<div className={classes.ErrorMessage}>
-				<p>EMAIL NOT FOUND</p>
+				<p>Email not found</p>
+			</div>
+		)
+	}
+
+	if(props.errorText === 'EMAIL_EXISTS') {
+		return (
+			<div className={classes.ErrorMessage}>
+				<p>Email exists</p>
+			</div>
+		)
+	}
+
+	if(props.errorText === 'USER_DISABLED') {
+		return (
+			<div className={classes.ErrorMessage}>
+				<p>User disabled</p>
 			</div>
 		)
 	}
