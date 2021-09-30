@@ -10,7 +10,7 @@ const Todobody = () => {
 
 	const auth = useContext(AuthContext)
 
-	let state = null;
+	let state;
 	if (auth.token) {
 		state = {
 			taskList: [],
