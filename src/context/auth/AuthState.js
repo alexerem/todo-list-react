@@ -64,6 +64,9 @@ export const AuthState = ({children}) => {
 			if (error.response.data.error.message === 'USER_DISABLED') {
 				changeErrorAuth('USER_DISABLED')
 			}
+			if (error.response.data.error.message === 'INVALID_EMAIL') {
+				changeErrorAuth('INVALID_EMAIL')
+			}
 
 			console.log(error)
 		}

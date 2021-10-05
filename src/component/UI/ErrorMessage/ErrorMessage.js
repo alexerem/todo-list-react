@@ -47,6 +47,14 @@ const ErrorMessage = (props) => {
 		)
 	}
 
+	if(props.errorText === 'INVALID_EMAIL') {
+		return (
+			<div className={classes.ErrorMessage}>
+				<p>Invalid email</p>
+			</div>
+		)
+	}
+
 }
 
 export default ErrorMessage;
