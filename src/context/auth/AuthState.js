@@ -26,7 +26,7 @@ export const AuthState = ({children}) => {
 		let url = null;
 
 		if (idButton === 'login') {
-			url = `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${{secrets.REACT_APP_API_KEY}}`
+			url = `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${process.env.REACT_APP_API_KEY}`
 		}
 		if (idButton === 'register') {
 			url = `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${process.env.REACT_APP_API_KEY}`
