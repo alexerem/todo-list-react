@@ -14,7 +14,8 @@ export const Layout = () => {
 
 	useEffect(() => {
 		auth.autoLogin()
-	}, [])
+	}, []) // eslint-disable-line react-hooks/exhaustive-deps
+
 
 	if (auth.token === null) {
 		return (

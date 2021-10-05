@@ -59,7 +59,7 @@ const Todobody = () => {
 				setTodoState({...todoState, loader: false})
 			}
 		})();
-	},[auth.token, auth.userId, todoState.changeState])
+	},[auth.token, auth.userId, todoState.changeState]) // eslint-disable-line react-hooks/exhaustive-deps
 
 	const changeInput = (event) => {
 		setTodoState({

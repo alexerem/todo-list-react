@@ -27,7 +27,8 @@ export const AuthForm = () => {
 		if (formdata.email === '' && formdata.password === '') {
 			auth.changeErrorAuth(null)
 		}
-	}, [])
+	}, []) // eslint-disable-line react-hooks/exhaustive-deps
+
 
 
 	const { register, handleSubmit, formState: { errors } } = useForm();
