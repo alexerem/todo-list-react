@@ -3,6 +3,7 @@ import axios from "axios";
 import authReducer from "./authReducer";
 import {AuthContext} from "./authContext";
 import {AUTH_LOGIN, AUTH_LOGOUT, ERROR_AUTH_STATUS} from "../types";
+import apikey from "./apikey";
 
 export const AuthState = ({children}) => {
 
@@ -23,13 +24,13 @@ export const AuthState = ({children}) => {
 			returnSecureToken: true
 		}
 
-		let url = null;
+		let url;
 
 		if (idButton === 'login') {
-			url = `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${process.env.REACT_APP_API_KEY}`
+			url = `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${apikey}`
 		}
 		if (idButton === 'register') {
-			url = `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${process.env.REACT_APP_API_KEY}`
+			url = `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${apikey}`
 		}
 
 		try	{
