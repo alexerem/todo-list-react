@@ -53,3 +53,17 @@
 .info button:hover {
     background-color: #75f874;
 }
+
+@media (max-width: 440px) {
+    .info {
+        width: 300px;
+    }
+
+    .info-text {
+        left: 5px;
+    }
+
+    .info button {
+        left: 110px;
+    }
+}

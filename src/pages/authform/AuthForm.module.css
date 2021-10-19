@@ -47,3 +47,30 @@ input {
     border-radius: 5px;
     margin-bottom: 10px;
 }
+
+@media (max-width: 560px) {
+    .AuthForm {
+        width: 460px;
+    }
+}
+
+@media (max-width: 440px) {
+    .AuthForm {
+        width: 380px;
+    }
+}
+
+@media (max-width: 380px) {
+    .form p {
+        font-size: 24px;
+        text-align: center;
+    }
+
+    .form {
+        width: 300px;
+    }
+
+    .AuthForm {
+        width: 300px;
+    }
+}

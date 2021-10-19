@@ -34,3 +34,9 @@ a:nth-child(2) {
 a:visited {
     color: #5c5858;
 }
+
+@media (max-width: 440px) {
+    a {
+        width: 150px;
+    }
+}

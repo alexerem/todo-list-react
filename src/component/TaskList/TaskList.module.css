@@ -36,3 +36,9 @@
     top: 48px;
 }
 
+@media (max-width: 580px) {
+    .TaskList {
+        width: 300px;
+        justify-content: center;
+    }
+}
