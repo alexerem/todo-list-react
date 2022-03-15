@@ -3,6 +3,7 @@ import classes from '../TaskList/TaskList.module.css';
 import '../TaskList/TaskList.module.css';
 import {CheckCircleTwoTone} from '@ant-design/icons';
 import {ButtonDelTask} from "../UI/ButtonDelTask/ButtonDelTask";
+import LoaderChecked from "../UI/LoaderChecked/LoaderChecked";
 
 const TaskItem = props => {
 
@@ -14,10 +15,20 @@ const TaskItem = props => {
 		setDelButton({delButton: false})
 	}
 
+	const [loaderChecked, setLoaderChecked] = useState({loaderChecked: false})
+
+	const clickTask = async () => {
+		setLoaderChecked({loaderChecked: true})
+
+		await props.checkedTask(props.index)
+
+		setLoaderChecked({loaderChecked: false})
+	}
+
 		return (
 			<div
 				className={classes.TaskItem + ' ' + props.checked}
-				onClick={() => props.checkedTask(props.index)}
+				onClick={clickTask}
 				onMouseEnter={showDelButton}
 				onMouseLeave={hideDelButton}
 			>
@@ -41,6 +52,14 @@ const TaskItem = props => {
 					<div className={classes.checkedIcon} >
 						<CheckCircleTwoTone twoToneColor="#52c41a" />
 					</div>
+						:
+					null
+				}
+
+				{
+					loaderChecked.loaderChecked
+						?
+					<LoaderChecked />
 						:
 					null
 				}
