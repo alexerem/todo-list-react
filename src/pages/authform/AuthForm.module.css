@@ -1,5 +1,6 @@
 .AuthForm {
     display: flex;
+    position: relative;
     align-items: center;
     flex-direction: column;
     width: 560px;
@@ -48,6 +49,87 @@ input {
     margin-bottom: 10px;
 }
 
+.forgotPass {
+    text-align: right;
+}
+
+.forgotPass span {
+    font-size: 15px;
+    color: #3b3939;
+    margin: 0;
+    background-color: #ffffff;
+    border-radius: 0;
+    font-style: italic;
+    cursor: pointer;
+    padding: 0 10px 0 0;
+}
+
+.forgotPass span:hover {
+    text-decoration: underline;
+}
+
+.passResetMask {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    width: 80%;
+    height: 95%;
+    background: #ede9de;
+    border-radius: 10px;
+    animation: changePass 1000ms ease-out forwards;
+}
+
+.passResetMask label {
+    width: 280px;
+    padding: 0;
+    margin-bottom: 20px;
+    text-align: center;
+    color: #5c5858;
+}
+
+.passResetMask input {
+    margin-bottom: 15px;
+    border: 1px solid #5c5858;
+    width: 240px;
+    height: 20px;
+    padding: 8px 10px;
+    font-size: 16px;
+}
+
+.passResetMask button {
+    width: 120px;
+    height: 30px;
+    margin: 0 20px 20px 20px;
+    padding: 5px 15px;
+    text-transform: uppercase;
+    font-weight: 500;
+    border: none;
+    cursor: pointer;
+    color: #5c5858;
+    background-color: #a0f88f;
+}
+
+.passResetMask button:hover {
+    background-color: #75f874;
+}
+
+@keyframes changePass {
+    0% {
+        opacity: 0;
+        transform: translateX(-100px);
+    }
+
+    20% {
+        opacity: 1;
+    }
+
+    100% {
+        transform: translateX(0px);
+    }
+}
+
 @media (max-width: 560px) {
     .AuthForm {
         width: 460px;
@@ -57,6 +139,10 @@ input {
 @media (max-width: 440px) {
     .AuthForm {
         width: 380px;
+    }
+
+    .passResetMask {
+        width: 100%;
     }
 }
 

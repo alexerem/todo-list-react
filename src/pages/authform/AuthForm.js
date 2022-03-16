@@ -4,6 +4,7 @@ import ButtonAuth from "../../component/UI/ButtonAuth/ButtonAuth";
 import { useForm } from 'react-hook-form';
 import {AuthContext} from "../../context/auth/authContext";
 import ErrorMessage from "../../component/UI/ErrorMessage/ErrorMessage";
+import ChangePass from "../../component/ChangePass/ChangePass";
 
 export const AuthForm = () => {
 
@@ -14,6 +15,8 @@ export const AuthForm = () => {
 		password: '',
 		idButton: ''
 	});
+
+	const [maskResetPass, setMaskResetPass] = useState( false)
 
 	useEffect(() => {
 		if (formdata.email !== '' && formdata.password !== '') {
@@ -43,9 +46,9 @@ export const AuthForm = () => {
 		setFormdata({...formdata, email, password, idButton})
 	};
 
-
 	return (
 		<div className={classes.AuthForm}>
+
 			<form className={classes.form} onSubmit={handleSubmit(onSubmit)}>
 				<p>Please log-in or register!</p>
 				<div className={classes.formGroup}>
@@ -78,6 +81,12 @@ export const AuthForm = () => {
 
 				</div>
 
+				<div className={classes.forgotPass}>
+					<span onClick={() => setMaskResetPass(!maskResetPass)}>
+						Forgot password?
+					</span>
+				</div>
+
 				<div className={classes.input}>
 					<ButtonAuth value={'Login'} name={'login'} type={'submit'}/>
 					<ButtonAuth value={'Register'} name={'register'} type={'submit'}/>
@@ -86,6 +95,9 @@ export const AuthForm = () => {
 				<ErrorMessage errorText={auth.errorAuth}/>
 
 			</form>
+
+			{ maskResetPass && <ChangePass /> }
+
 		</div>
 	)
 }
