@@ -1,23 +1,44 @@
 import React, {useState} from 'react';
-import classes from "../../pages/authform/AuthForm.module.css";
+import "./ChangePass.css";
 
-const ChangePass = () => {
+const ChangePass = (props) => {
 
 	const [inputState, setInputState] = useState({input: ''})
+	const [closeButton, setCloseButton] = useState(false)
 
 	const changeInput = (event) => {
-		setInputState({
-			...inputState,
-			input: event.target.value
-		})
+		setInputState({ input: event.target.value })
+	}
+
+	const showCloseButton = () => {
+		setCloseButton(true)
+	}
+
+	const hideCloseButton = () => {
+		setCloseButton(false)
 	}
 
 	const sendEmail = () => {
 		console.log(inputState.input)
 	}
 
+	console.log(props.state)
+
 	return (
-			<div className={classes.passResetMask}>
+			<div className={`passResetMask ${props.state}`}
+				 onMouseEnter={showCloseButton}
+				 onMouseLeave={hideCloseButton}
+			>
+
+					{
+						closeButton
+							? <div
+								className={'closeButton'}
+								onClick={() => props.setMaskResetPass(false)}
+							/>
+							: null
+					}
+
 					<label htmlFor="emailInput">
 						To recover your password, enter your email and follow the instructions in the email.
 					</label>

@@ -1,10 +1,12 @@
 import React, {useState, useEffect, useContext} from 'react';
-import classes from './AuthForm.module.css'
+import classes from './AuthForm.module.css';
+import './AuthForm.module.css';
 import ButtonAuth from "../../component/UI/ButtonAuth/ButtonAuth";
 import { useForm } from 'react-hook-form';
 import {AuthContext} from "../../context/auth/authContext";
 import ErrorMessage from "../../component/UI/ErrorMessage/ErrorMessage";
 import ChangePass from "../../component/ChangePass/ChangePass";
+import { Transition } from 'react-transition-group';
 
 export const AuthForm = () => {
 
@@ -82,7 +84,7 @@ export const AuthForm = () => {
 				</div>
 
 				<div className={classes.forgotPass}>
-					<span onClick={() => setMaskResetPass(!maskResetPass)}>
+					<span onClick={() => setMaskResetPass(true)}>
 						Forgot password?
 					</span>
 				</div>
@@ -96,7 +98,9 @@ export const AuthForm = () => {
 
 			</form>
 
-			{ maskResetPass && <ChangePass /> }
+				<Transition in={maskResetPass} timeout={700}>
+					{ state => <ChangePass setMaskResetPass={setMaskResetPass} state={state}/> }
+				</Transition>
 
 		</div>
 	)

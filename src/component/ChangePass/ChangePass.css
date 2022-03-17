@@ -1,0 +1,85 @@
+
+.passResetMask {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    width: 80%;
+    height: 95%;
+    background: #ede9de;
+    border-radius: 10px;
+}
+
+.passResetMask.entering {
+    animation: changePass 700ms ease-out forwards;
+}
+
+.passResetMask.exiting {
+    animation: changePass 700ms ease-in alternate-reverse;
+}
+
+.passResetMask.exited {
+    opacity: 0.4;
+    display: none;
+}
+
+.passResetMask label {
+    width: 280px;
+    padding: 0;
+    margin-bottom: 20px;
+    text-align: center;
+    color: #5c5858;
+}
+
+.passResetMask input {
+    margin-bottom: 15px;
+    border: 1px solid #5c5858;
+    width: 240px;
+    height: 20px;
+    padding: 8px 10px;
+    font-size: 16px;
+}
+
+.passResetMask button {
+    width: 120px;
+    height: 30px;
+    margin: 0 20px 20px 20px;
+    padding: 5px 15px;
+    text-transform: uppercase;
+    font-weight: 500;
+    border: none;
+    cursor: pointer;
+    color: #5c5858;
+    background-color: #a0f88f;
+}
+
+.passResetMask button:hover {
+    background-color: #75f874;
+}
+
+.closeButton {cursor: pointer; position: absolute; top: 30px; right: 40px;}
+.closeButton:before, .closeButton:after {content: ""; position: absolute; width: 20px; height: 4px; background: #dad5c7;}
+.closeButton:before {transform: rotate(45deg);}
+.closeButton:after {transform: rotate(-45deg);}
+
+@keyframes changePass {
+    0% {
+        opacity: 0;
+        transform: translateX(-100px);
+    }
+
+    20% {
+        opacity: 1;
+    }
+
+    100% {
+        transform: translateX(0px);
+    }
+}
+
+@media (max-width: 440px) {
+    .passResetMask {
+        width: 100%;
+    }
+}
