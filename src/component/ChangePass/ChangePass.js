@@ -1,28 +1,67 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import "./ChangePass.css";
+import classes from '../UI/ErrorMessage/ErrorMessage.module.css'
+import axios from "axios";
+import apikey from "../../context/auth/apikey";
+import ErrorMessage from "../UI/ErrorMessage/ErrorMessage";
 
 const ChangePass = (props) => {
 
-	const [inputState, setInputState] = useState({input: ''})
-	const [closeButton, setCloseButton] = useState(false)
+	const [inputState, setInputState] = useState({
+		input: '',
+		closeButton: false,
+		errorText: null
+	})
+
+	useEffect(() => {
+		if (inputState.input === '') {
+			setInputState({...inputState, errorText: null})
+		}
+	}, [inputState.input])
 
 	const changeInput = (event) => {
-		setInputState({ input: event.target.value })
+		setInputState({...inputState, input: event.target.value })
+	}
+
+	const clickCloseButton = () => {
+		setInputState({...inputState, input: '', errorText: null })
+		props.setMaskResetPass(false)
 	}
 
 	const showCloseButton = () => {
-		setCloseButton(true)
+		setInputState({...inputState, closeButton: true})
 	}
 
 	const hideCloseButton = () => {
-		setCloseButton(false)
+		setInputState({...inputState, closeButton: false})
 	}
 
-	const sendEmail = () => {
-		console.log(inputState.input)
-	}
+	const sendEmail = async () => {
 
-	console.log(props.state)
+		let email = {requestType:"PASSWORD_RESET", email:`${inputState.input}`}
+
+		try	{
+			const response = await axios.post(
+				`https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key=${apikey}`, email
+			)
+
+			console.log(response.data)
+
+		} catch (error) {
+
+			setInputState({...inputState, errorText: null})
+
+			if (error.response.data.error.message === 'INVALID_EMAIL') {
+				setInputState({...inputState, errorText: 'INVALID_EMAIL'})
+			}
+			if (error.response.data.error.message === 'EMAIL_NOT_FOUND') {
+				setInputState({...inputState, errorText: 'EMAIL_NOT_FOUND'})
+			}
+
+			console.log(error)
+		}
+
+	}
 
 	return (
 			<div className={`passResetMask ${props.state}`}
@@ -31,10 +70,10 @@ const ChangePass = (props) => {
 			>
 
 					{
-						closeButton
+						inputState.closeButton
 							? <div
 								className={'closeButton'}
-								onClick={() => props.setMaskResetPass(false)}
+								onClick={clickCloseButton}
 							/>
 							: null
 					}
@@ -45,8 +84,13 @@ const ChangePass = (props) => {
 					<input
 						type="text" id="emailInput"
 						onChange={event => changeInput(event)}
+						value={inputState.input}
 					/>
-					<button onClick={sendEmail}>Send</button>
+
+					<button onClick={sendEmail} > SEND </button>
+
+					<ErrorMessage errorText={inputState.errorText}/>
+
 			</div>
 		)
 }
