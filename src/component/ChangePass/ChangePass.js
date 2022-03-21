@@ -1,23 +1,26 @@
 import React, {useState, useEffect} from 'react';
 import "./ChangePass.css";
-import classes from '../UI/ErrorMessage/ErrorMessage.module.css'
 import axios from "axios";
 import apikey from "../../context/auth/apikey";
 import ErrorMessage from "../UI/ErrorMessage/ErrorMessage";
+import LoaderResetPass from "../UI/LoaderResetPass/LoaderResetPass";
+import iconSuccess from "../../img/svg/icon-success.svg";
 
 const ChangePass = (props) => {
 
 	const [inputState, setInputState] = useState({
 		input: '',
 		closeButton: false,
-		errorText: null
+		errorText: null,
+		loader: false,
+		successEmail: false
 	})
 
 	useEffect(() => {
 		if (inputState.input === '') {
-			setInputState({...inputState, errorText: null})
+			setInputState({...inputState, errorText: null, successEmail: false})
 		}
-	}, [inputState.input])
+	}, [inputState.input]) // eslint-disable-line react-hooks/exhaustive-deps
 
 	const changeInput = (event) => {
 		setInputState({...inputState, input: event.target.value })
@@ -40,25 +43,25 @@ const ChangePass = (props) => {
 
 		let email = {requestType:"PASSWORD_RESET", email:`${inputState.input}`}
 
+		setInputState({...inputState, errorText: null, loader: true, successEmail: false})
+
 		try	{
-			const response = await axios.post(
+
+			await axios.post(
 				`https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key=${apikey}`, email
 			)
 
-			console.log(response.data)
+			setInputState({...inputState, errorText: null, successEmail: true })
 
 		} catch (error) {
 
-			setInputState({...inputState, errorText: null})
-
 			if (error.response.data.error.message === 'INVALID_EMAIL') {
-				setInputState({...inputState, errorText: 'INVALID_EMAIL'})
+				setInputState({...inputState, errorText: 'INVALID_EMAIL', successEmail: false})
 			}
 			if (error.response.data.error.message === 'EMAIL_NOT_FOUND') {
-				setInputState({...inputState, errorText: 'EMAIL_NOT_FOUND'})
+				setInputState({...inputState, errorText: 'EMAIL_NOT_FOUND', successEmail: false})
 			}
 
-			console.log(error)
 		}
 
 	}
@@ -91,8 +94,26 @@ const ChangePass = (props) => {
 
 					<ErrorMessage errorText={inputState.errorText}/>
 
+					{
+						inputState.successEmail
+							?
+						<div>
+							<img src={iconSuccess} style={{height:90}} alt="Success"/>
+						</div>
+							:
+						null
+					}
+
+					{
+						inputState.loader
+							?
+						<LoaderResetPass />
+							:
+						null
+					}
+
 			</div>
 		)
-}
+};
 
 export default ChangePass;
